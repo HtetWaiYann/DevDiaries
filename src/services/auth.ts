@@ -29,7 +29,7 @@ export default class AuthService {
       });
 
       if (checkUserRecord) {
-        throw new Error('User already exits.');
+        throw new Error('User already exists.');
       }
 
       // create primary key with uuid() and hash password with bcrypt
