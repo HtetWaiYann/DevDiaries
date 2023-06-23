@@ -36,6 +36,7 @@ export default class AuthService {
       const userid = uuidv4();
       // hash password for security
       const hashedPassword = bcrypt.hashSync(userInputDTO.password, 10);
+      console.log(hashedPassword);
       const userCredentialData: IUserCredentialModel = {
         userid: userid,
         email: userInputDTO.email,
@@ -100,7 +101,7 @@ export default class AuthService {
       }
     });
     if (!userRecord) {
-      throw new Error('User not registered');
+      throw new Error('User not registered.');
     }
 
     const validPassword = bcrypt.compareSync(password, userRecord.password);
@@ -115,7 +116,7 @@ export default class AuthService {
       const response: IResponse = responseFunction('200', 'Signed in successfully.', data);
       return { response };
     } else {
-      throw new Error('Invalid Password');
+      throw new Error('Invalid Password.');
     }
   }
 
