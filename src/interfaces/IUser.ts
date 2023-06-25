@@ -13,7 +13,7 @@ export interface IUserInputDTO {
 }
 
 export interface resetPwdInput {
-  email: string;
+  userid: string;
   password: string;
   newpassword: string;
 }

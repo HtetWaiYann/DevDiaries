@@ -5,14 +5,19 @@ import { resetPwdInput } from '../interfaces/IUser';
 
 @Service()
 export default class UserService {
-  constructor(@Inject('userModel') private userModel: any, @Inject('logger') private logger: any) {}
+  constructor(@Inject('userCredentialModel') private userCredentialModel: any, @Inject('logger') private logger: any) {}
 
+  /**
+   * Update password
+   * @param resetPwdInput emial, password, newpassword
+   * @returns 
+   */
   public async updatePassword(resetPwdInput: resetPwdInput): Promise<object> {
     try {
       var userRecord: any;
       // Mysql function to find data
       // before updating the password, we need to check user is registered or not
-      await this.userModel.services.findAll({ where: { email: resetPwdInput.email } }).then((data: any) => {
+      await this.userCredentialModel.services.findAll({ where: { userid: resetPwdInput.userid } }).then((data: any) => {
         if (data.length > 0) {
           userRecord = data[0];
         }
@@ -32,12 +37,12 @@ export default class UserService {
         this.logger.silly('Hashing password');
         // const hashedPassword = await argon2.hash(resetPwdInput.newpassword);
         const hashedPassword = bcrypt.hashSync(resetPwdInput.newpassword, 10);
-        const filter = { email: resetPwdInput.email };
+        const filter = { userid: resetPwdInput.userid };
         const update = { password: hashedPassword };
         try {
           var result: any;
           // Mysql function to update data
-          await this.userModel.services
+          await this.userCredentialModel.services
             .update(update, {
               where: filter,
             })

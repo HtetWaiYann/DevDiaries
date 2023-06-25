@@ -127,20 +127,23 @@ export default class AuthService {
    */
   public async SocialSignIn(userInputDTO: IUserInputDTO): Promise<{ response: IResponse }> {
     try {
-      var checkUserRecord;
+      var checkUserRecord: any;
       // check user with same email already exists
       await this.userCredentialModel.services.findAll({ where: { email: userInputDTO.email } }).then((data: any) => {
         if (data.length > 0) {
           checkUserRecord = data[0];
-          const token = this.generateToken(checkUserRecord.userid);
-          const _data = {
-            token: token,
-            userid: checkUserRecord.userid,
-          };
-          const response: IResponse = responseFunction('200', 'Signed in successfully.', _data);
-          return { response };
         }
       });
+
+      if (checkUserRecord) {
+        const token = this.generateToken(checkUserRecord.userid);
+        const _data = {
+          token: token,
+          userid: checkUserRecord.userid,
+        };
+        const response: IResponse = responseFunction('200', 'Signed in successfully.', _data);
+        return { response };
+      }
 
       // create primary key with uuid() and hash password with bcrypt
       const userid = uuidv4();
@@ -200,7 +203,7 @@ export default class AuthService {
    * @param userid userid to store in jwt token payload
    * @returns
    */
-  private generateToken(userid: string) {
+  public generateToken(userid: string) {
     const today = new Date();
     const exp = new Date(today);
     exp.setDate(today.getDate() + 60);

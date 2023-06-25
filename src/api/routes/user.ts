@@ -11,20 +11,20 @@ const route = Router();
 export default (app: Router) => {
   app.use('/user', route);
 
-  //Reset Password
+  //Update Password
   route.post(
-    '/resetpwd',
+    '/profile/update',
     celebrate({
       body: Joi.object({
-        email: Joi.string().required(),
+        userid: Joi.string().required(),
         password: Joi.string().required(),
         newpassword: Joi.string().required(),
       }),
     }),
     middlewares.isAuth,
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger:Logger = Container.get('logger');
-      logger.debug('Calling Reset Password endpoint with body: %o', req.body );
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling Reset Password endpoint with body: %o', req.body);
       try {
         const authServiceInstance = Container.get(UserService);
         const result = await authServiceInstance.updatePassword(req.body as resetPwdInput);
@@ -36,4 +36,28 @@ export default (app: Router) => {
     },
   );
 
+  //Update Password
+  route.post(
+    '/password/update',
+    celebrate({
+      body: Joi.object({
+        userid: Joi.string().required(),
+        password: Joi.string().required(),
+        newpassword: Joi.string().required(),
+      }),
+    }),
+    middlewares.isAuth,
+    async (req: Request, res: Response, next: NextFunction) => {
+      const logger: Logger = Container.get('logger');
+      logger.debug('Calling Reset Password endpoint with body: %o', req.body);
+      try {
+        const authServiceInstance = Container.get(UserService);
+        const result = await authServiceInstance.updatePassword(req.body as resetPwdInput);
+        return res.status(201).json(result);
+      } catch (e) {
+        logger.error('🔥 error: %o', e);
+        return next(e);
+      }
+    },
+  );
 };
