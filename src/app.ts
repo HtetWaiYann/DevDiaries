@@ -12,7 +12,7 @@ async function startServer() {
 
   await require('./loaders').default({ expressApp: app });
 
-  app.listen(config.port, () => {
+  app.listen(config.port as number, "0.0.0.0", () => {
     console.log("Server listening on port: " + config.port)
     Logger.info(`
       ################################################

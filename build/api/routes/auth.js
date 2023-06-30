@@ -16,14 +16,14 @@ const express_1 = require("express");
 const typedi_1 = require("typedi");
 const auth_1 = __importDefault(require("../../services/auth"));
 const celebrate_1 = require("celebrate");
-const middlewares_1 = __importDefault(require("../middlewares"));
 const route = (0, express_1.Router)();
 exports.default = (app) => {
     app.use('/auth', route);
     //Sign up
     route.post('/signup', (0, celebrate_1.celebrate)({
         body: celebrate_1.Joi.object({
-            name: celebrate_1.Joi.string().required(),
+            firstname: celebrate_1.Joi.string().required(),
+            lastname: celebrate_1.Joi.string().required(),
             email: celebrate_1.Joi.string().required(),
             password: celebrate_1.Joi.string().required(),
         }),
@@ -32,8 +32,8 @@ exports.default = (app) => {
         logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
         try {
             const authServiceInstance = typedi_1.Container.get(auth_1.default);
-            const { user } = yield authServiceInstance.SignUp(req.body);
-            return res.status(201).json({ user });
+            const { response } = yield authServiceInstance.SignUp(req.body);
+            return res.json(response).status(200);
         }
         catch (e) {
             logger.error('🔥 error: %o', e);
@@ -47,33 +47,38 @@ exports.default = (app) => {
             password: celebrate_1.Joi.string().required(),
         }),
     }), (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        const logger = typedi_1.Container.get('logger');
-        logger.debug('Calling Sign-In endpoint with body: %o', req.body);
+        // const logger:Logger = Container.get('logger');
+        // logger.debug('Calling Sign-In endpoint with body: %o', req.body);
         try {
             const { email, password } = req.body;
             const authServiceInstance = typedi_1.Container.get(auth_1.default);
-            const { user, token } = yield authServiceInstance.SignIn(email, password);
-            return res.json({ user, token }).status(200);
+            const { response } = yield authServiceInstance.SignIn(email, password);
+            return res.json(response).status(200);
+        }
+        catch (e) {
+            // logger.error('🔥 error: %o',  e );
+            return next(e);
+        }
+    }));
+    // Social Sign in
+    route.post('/social', (0, celebrate_1.celebrate)({
+        body: celebrate_1.Joi.object({
+            firstname: celebrate_1.Joi.string().required(),
+            lastname: celebrate_1.Joi.string().required(),
+            email: celebrate_1.Joi.string().required(),
+            password: celebrate_1.Joi.string().required(),
+        }),
+    }), (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+        const logger = typedi_1.Container.get('logger');
+        logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
+        try {
+            const authServiceInstance = typedi_1.Container.get(auth_1.default);
+            const { response } = yield authServiceInstance.SocialSignIn(req.body);
+            return res.json(response).status(200);
         }
         catch (e) {
             logger.error('🔥 error: %o', e);
             return next(e);
         }
     }));
-    // Log out function - We try to get the token from the header first using the middlewares
-    route.post('/logout', middlewares_1.default.isAuth, (req, res, next) => {
-        const logger = typedi_1.Container.get('logger');
-        logger.debug('Calling Sign-Out endpoint with body: %o', req.body);
-        try {
-            const logger = typedi_1.Container.get('logger');
-            logger.info("Ha! Token is correct!");
-            return res.status(200).json({
-                "message": "You are logged out."
-            });
-        }
-        catch (e) {
-            logger.error('🔥 error %o', e);
-            return next(e);
-        }
-    });
 };

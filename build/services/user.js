@@ -25,17 +25,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedi_1 = require("typedi");
-const argon2_1 = __importDefault(require("argon2"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = require("crypto");
 let UserService = class UserService {
-    constructor(userModel, logger) {
-        this.userModel = userModel;
+    constructor(userCredentialModel, logger) {
+        this.userCredentialModel = userCredentialModel;
         this.logger = logger;
     }
+    /**
+     * Update password
+     * @param resetPwdInput emial, password, newpassword
+     * @returns
+     */
     updatePassword(resetPwdInput) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const userRecord = yield this.userModel.findOne({ email: resetPwdInput.email });
+                var userRecord;
+                // Mysql function to find data
+                // before updating the password, we need to check user is registered or not
+                yield this.userCredentialModel.services.findAll({ where: { userid: resetPwdInput.userid } }).then((data) => {
+                    if (data.length > 0) {
+                        userRecord = data[0];
+                    }
+                });
                 if (!userRecord) {
                     throw new Error('User not registered');
                 }
@@ -43,16 +55,31 @@ let UserService = class UserService {
                  * We use verify from argon2 to prevent 'timing based' attacks
                  */
                 this.logger.silly('Checking password');
-                const validPassword = yield argon2_1.default.verify(userRecord.password, resetPwdInput.password);
+                // const validPassword = await argon2.verify(userRecord.password, resetPwdInput.password);
+                const validPassword = bcrypt_1.default.compareSync(resetPwdInput.password, userRecord.password);
                 if (validPassword) {
                     const salt = (0, crypto_1.randomBytes)(32);
                     this.logger.silly('Hashing password');
-                    const hashedPassword = yield argon2_1.default.hash(resetPwdInput.newpassword);
-                    const filter = { email: resetPwdInput.email };
+                    // const hashedPassword = await argon2.hash(resetPwdInput.newpassword);
+                    const hashedPassword = bcrypt_1.default.hashSync(resetPwdInput.newpassword, 10);
+                    const filter = { userid: resetPwdInput.userid };
                     const update = { password: hashedPassword };
                     try {
-                        yield this.userModel.findOneAndUpdate(filter, update, {});
-                        return { message: 'Password updated successfully!' };
+                        var result;
+                        // Mysql function to update data
+                        yield this.userCredentialModel.services
+                            .update(update, {
+                            where: filter,
+                        })
+                            .then((data) => {
+                            if (data == 1) {
+                                result = { message: 'Password updated successfully!' };
+                            }
+                            else {
+                                throw new Error('Error updating the password.');
+                            }
+                        });
+                        return result;
                     }
                     catch (e) {
                         this.logger.error(e);
@@ -69,22 +96,10 @@ let UserService = class UserService {
             }
         });
     }
-    deleteUser(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.userModel.deleteOne({ _id: id });
-                return ({ "message": "User deleted successfully." });
-            }
-            catch (e) {
-                this.logger.error(e);
-                throw e;
-            }
-        });
-    }
 };
 UserService = __decorate([
     (0, typedi_1.Service)(),
-    __param(0, (0, typedi_1.Inject)('userModel')),
+    __param(0, (0, typedi_1.Inject)('userCredentialModel')),
     __param(1, (0, typedi_1.Inject)('logger')),
     __metadata("design:paramtypes", [Object, Object])
 ], UserService);

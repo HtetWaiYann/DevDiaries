@@ -13,22 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("./express"));
-const mongoose_1 = __importDefault(require("./mongoose"));
 const dependencyInjector_1 = __importDefault(require("./dependencyInjector"));
 const logger_1 = __importDefault(require("./logger"));
 exports.default = ({ expressApp }) => __awaiter(void 0, void 0, void 0, function* () {
-    const mongoConnection = yield (0, mongoose_1.default)();
-    logger_1.default.info('✌️ DB loaded and connected!');
-    //create table
+    // const mongoConnection = await mongooseLoader();
+    // Logger.info('✌️ DB loaded and connected!');
+    const userCredentialModel = {
+        name: 'userCredentialModel',
+        model: require('../models/user_credentials')
+    };
     const userModel = {
         name: 'userModel',
-        // Notice the require syntax and the '.default'
-        model: require('../models/user').default,
+        model: require('../models/users'),
     };
+    // create table
+    userModel.model.sequelize.sync();
+    // Set Containers for Dependency Injection
     yield (0, dependencyInjector_1.default)({
-        mongoConnection,
         models: [
             userModel,
+            userCredentialModel
         ],
     });
     logger_1.default.info('✌️ Dependency Injector loaded');

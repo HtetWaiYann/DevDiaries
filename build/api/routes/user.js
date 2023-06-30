@@ -20,10 +20,10 @@ const user_1 = __importDefault(require("../../services/user"));
 const route = (0, express_1.Router)();
 exports.default = (app) => {
     app.use('/user', route);
-    //Reset Password
-    route.post('/resetpwd', (0, celebrate_1.celebrate)({
+    //Update Password
+    route.post('/profile/update', (0, celebrate_1.celebrate)({
         body: celebrate_1.Joi.object({
-            email: celebrate_1.Joi.string().required(),
+            userid: celebrate_1.Joi.string().required(),
             password: celebrate_1.Joi.string().required(),
             newpassword: celebrate_1.Joi.string().required(),
         }),
@@ -40,16 +40,19 @@ exports.default = (app) => {
             return next(e);
         }
     }));
-    route.post('/delete', (0, celebrate_1.celebrate)({
+    //Update Password
+    route.post('/password/update', (0, celebrate_1.celebrate)({
         body: celebrate_1.Joi.object({
-            id: celebrate_1.Joi.string().required()
+            userid: celebrate_1.Joi.string().required(),
+            password: celebrate_1.Joi.string().required(),
+            newpassword: celebrate_1.Joi.string().required(),
         }),
     }), middlewares_1.default.isAuth, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const logger = typedi_1.Container.get('logger');
-        logger.debug('Calling Sign-Up endpoint with body: %o', req.body);
+        logger.debug('Calling Reset Password endpoint with body: %o', req.body);
         try {
             const authServiceInstance = typedi_1.Container.get(user_1.default);
-            const result = yield authServiceInstance.deleteUser(req.body.id);
+            const result = yield authServiceInstance.updatePassword(req.body);
             return res.status(201).json(result);
         }
         catch (e) {

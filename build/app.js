@@ -22,7 +22,8 @@ function startServer() {
         const app = (0, express_1.default)();
         // const loader1 = await loader({expressApp: app})
         yield require('./loaders').default({ expressApp: app });
-        app.listen(config_1.default.port, () => {
+        app.listen(config_1.default.port, "0.0.0.0", () => {
+            console.log("Server listening on port: " + config_1.default.port);
             logger_1.default.info(`
       ################################################
       🛡️  Server listening on port: ${config_1.default.port} 🛡️
