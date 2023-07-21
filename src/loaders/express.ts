@@ -47,7 +47,7 @@ export default ({ app }: { app: express.Application }) => {
       return res.status(err.status).send(responseFunction('200', err.message, {})).end();
     }
     if (err.message === 'INVALID' || err.name === "INVALID") {
-      return res.status(401).send(responseFunction('200', err.message, {})).end();
+      return res.status(200).send(responseFunction('401', err.message, {})).end();
     }
 
     return next(err);
