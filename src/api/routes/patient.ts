@@ -20,7 +20,7 @@ export default (app: Router) => {
             try {
                 const patientServiceInstance = Container.get(PatientService);
                 const result = await patientServiceInstance.createPatient(req.body as Patient);
-                return res.status(201).json(result);
+                return res.status(201).json(result.response);
             } catch (e) {
                 logger.error('🔥 error: %o', e);
                 return next(e);
