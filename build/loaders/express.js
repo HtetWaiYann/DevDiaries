@@ -43,6 +43,9 @@ exports.default = ({ app }) => {
         if (err.name === 'UnauthorizedError') {
             return res.status(err.status).send((0, responseFunction_1.default)('200', err.message, {})).end();
         }
+        if (err.message === 'INVALID' || err.name === "INVALID") {
+            return res.status(401).send((0, responseFunction_1.default)('200', err.message, {})).end();
+        }
         return next(err);
     });
     app.use((err, req, res, next) => {

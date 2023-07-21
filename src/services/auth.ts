@@ -101,7 +101,7 @@ export default class AuthService {
       }
     });
     if (!userRecord) {
-      throw new Error('User not registered.');
+      throw new Error('INVALID');
     }
 
     const validPassword = bcrypt.compareSync(password, userRecord.password);
@@ -116,7 +116,7 @@ export default class AuthService {
       const response: IResponse = responseFunction('200', 'Signed in successfully.', data);
       return { response };
     } else {
-      throw new Error('Invalid Password.');
+      throw new Error('INVALID');
     }
   }
 

@@ -115,7 +115,7 @@ let AuthService = class AuthService {
                 }
             });
             if (!userRecord) {
-                throw new Error('User not registered.');
+                throw new Error('INVALID');
             }
             const validPassword = bcrypt_1.default.compareSync(password, userRecord.password);
             if (validPassword) {
@@ -130,7 +130,7 @@ let AuthService = class AuthService {
                 return { response };
             }
             else {
-                throw new Error('Invalid Password.');
+                throw new Error('INVALID');
             }
         });
     }
