@@ -44,7 +44,7 @@ exports.default = ({ app }) => {
             return res.status(err.status).send((0, responseFunction_1.default)('200', err.message, {})).end();
         }
         if (err.message === 'INVALID' || err.name === "INVALID") {
-            return res.status(200).send((0, responseFunction_1.default)('401', err.message, {})).end();
+            return res.status(210).send((0, responseFunction_1.default)('401', err.message, {})).end();
         }
         return next(err);
     });
