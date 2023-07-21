@@ -44,7 +44,7 @@ export default class AuthService {
                 throw new Error('Patient referal cannot be created');
             }
 
-            const response: IResponse = responseFunction('200', 'Created successfully.', volunteerRecord);
+            const response: IResponse = responseFunction('200', 'Created successfully.', [volunteerRecord]);
             return { response };
         } catch (e) {
             throw e;
@@ -71,7 +71,7 @@ export default class AuthService {
                 } else {
                     const returncode = "300";
                     const message = "Vol list not found"
-                    var data: any;
+                    var data : any= [];
                     result = { returncode, message, data };
                     // return { response };
                 }

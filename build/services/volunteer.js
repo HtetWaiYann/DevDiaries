@@ -56,7 +56,7 @@ let AuthService = class AuthService {
                 if (!volunteerRecord) {
                     throw new Error('Patient referal cannot be created');
                 }
-                const response = (0, responseFunction_1.default)('200', 'Created successfully.', volunteerRecord);
+                const response = (0, responseFunction_1.default)('200', 'Created successfully.', [volunteerRecord]);
                 return { response };
             }
             catch (e) {
@@ -81,7 +81,7 @@ let AuthService = class AuthService {
                     else {
                         const returncode = "300";
                         const message = "Vol list not found";
-                        var data;
+                        var data = [];
                         result = { returncode, message, data };
                         // return { response };
                     }

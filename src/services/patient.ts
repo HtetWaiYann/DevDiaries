@@ -49,7 +49,7 @@ export default class AuthService {
       }
 
 
-      const response: IResponse = responseFunction('200', 'Created successfully.', patientRecord);
+      const response: IResponse = responseFunction('200', 'Created successfully.', [patientRecord]);
       return { response };
     } catch (e) {
       throw e;
@@ -77,7 +77,7 @@ export default class AuthService {
         } else {
           const returncode = "300";
           const message = "Patient list not found"
-          var data: any;
+          var data: any = [];
           result = { returncode, message, data };
           // return { response };
         }

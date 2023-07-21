@@ -59,7 +59,7 @@ let AuthService = class AuthService {
                 if (!patientRecord) {
                     throw new Error('Patient referal cannot be created');
                 }
-                const response = (0, responseFunction_1.default)('200', 'Created successfully.', patientRecord);
+                const response = (0, responseFunction_1.default)('200', 'Created successfully.', [patientRecord]);
                 return { response };
             }
             catch (e) {
@@ -86,7 +86,7 @@ let AuthService = class AuthService {
                     else {
                         const returncode = "300";
                         const message = "Patient list not found";
-                        var data;
+                        var data = [];
                         result = { returncode, message, data };
                         // return { response };
                     }
