@@ -26,13 +26,23 @@ exports.default = ({ expressApp }) => __awaiter(void 0, void 0, void 0, function
         name: 'userModel',
         model: require('../models/users'),
     };
+    const patientModel = {
+        name: 'patientModel',
+        model: require('../models/patient'),
+    };
+    const volunteerModel = {
+        name: 'volunteerModel',
+        model: require('../models/volunteer'),
+    };
     // create table
     userModel.model.sequelize.sync();
     // Set Containers for Dependency Injection
     yield (0, dependencyInjector_1.default)({
         models: [
             userModel,
-            userCredentialModel
+            userCredentialModel,
+            patientModel,
+            volunteerModel
         ],
     });
     logger_1.default.info('✌️ Dependency Injector loaded');

@@ -10,12 +10,21 @@ export default async ({ expressApp }: { expressApp: any }) => {
     name: 'userCredentialModel',
     model: require('../models/user_credentials')
   }
-  
+
   const userModel = {
     name: 'userModel',
     model: require('../models/users'),
   };
 
+  const patientModel = {
+    name: 'patientModel',
+    model: require('../models/patient'),
+  };
+
+  const volunteerModel = {
+    name: 'volunteerModel',
+    model: require('../models/volunteer'),
+  };
   // create table
   userModel.model.sequelize.sync();
 
@@ -23,7 +32,9 @@ export default async ({ expressApp }: { expressApp: any }) => {
   await dependencyInjectorLoader({
     models: [
       userModel,
-      userCredentialModel
+      userCredentialModel,
+      patientModel,
+      volunteerModel
     ],
   });
   Logger.info('✌️ Dependency Injector loaded');
