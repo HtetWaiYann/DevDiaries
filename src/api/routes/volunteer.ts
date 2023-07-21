@@ -20,7 +20,7 @@ export default (app: Router) => {
             try {
                 const volunteerServiceInstance = Container.get(volunteerService);
                 const result = await volunteerServiceInstance.createVolunteer(req.body as Volunteer);
-                return res.status(201).json(result);
+                return res.status(201).json(result.response);
             } catch (e) {
                 logger.error('🔥 error: %o', e);
                 return next(e);
