@@ -8,4 +8,5 @@ export interface Patient {
     address: string;
     referFrom: string;
     referTo: string;
+    signAndSymptom: string;
 }

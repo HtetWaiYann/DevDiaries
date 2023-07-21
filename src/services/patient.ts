@@ -34,7 +34,8 @@ export default class AuthService {
         "township": IPatient.township,
         "address": IPatient.address,
         "referFrom": IPatient.referFrom,
-        "referTo": IPatient.referTo
+        "referTo": IPatient.referTo,
+        "signAndSymptom": IPatient.signAndSymptom
       };
 
 

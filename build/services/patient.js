@@ -49,7 +49,8 @@ let AuthService = class AuthService {
                     "township": IPatient.township,
                     "address": IPatient.address,
                     "referFrom": IPatient.referFrom,
-                    "referTo": IPatient.referTo
+                    "referTo": IPatient.referTo,
+                    "signAndSymptom": IPatient.signAndSymptom
                 };
                 var patientRecord;
                 yield this.patientModel.services.create(patientData).then((data) => {

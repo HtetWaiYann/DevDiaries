@@ -35,6 +35,9 @@ const patientModel = (sequelize, Sequelize) => {
         referTo: {
             type: Sequelize.STRING,
         },
+        signAndSymptom: {
+            type: Sequelize.STRING,
+        },
     });
     return patients;
 };
