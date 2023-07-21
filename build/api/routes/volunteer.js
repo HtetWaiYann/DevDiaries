@@ -25,7 +25,7 @@ exports.default = (app) => {
         try {
             const volunteerServiceInstance = typedi_1.Container.get(volunteer_1.default);
             const result = yield volunteerServiceInstance.createVolunteer(req.body);
-            return res.status(201).json(result);
+            return res.status(201).json(result.response);
         }
         catch (e) {
             logger.error('🔥 error: %o', e);

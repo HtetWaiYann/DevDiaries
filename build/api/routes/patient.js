@@ -25,7 +25,7 @@ exports.default = (app) => {
         try {
             const patientServiceInstance = typedi_1.Container.get(patient_1.default);
             const result = yield patientServiceInstance.createPatient(req.body);
-            return res.status(201).json(result);
+            return res.status(201).json(result.response);
         }
         catch (e) {
             logger.error('🔥 error: %o', e);
