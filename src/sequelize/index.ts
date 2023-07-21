@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 //create connection
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
-  dialect: "mysql",
+  dialect: "postgres",
   pool: {
     max: config.pool.max,
     min: config.pool.min,
