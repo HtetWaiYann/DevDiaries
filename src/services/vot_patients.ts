@@ -152,12 +152,15 @@ export default class AuthService {
           })
           .then((data: any) => {
             if (data == 1) {
-              result = { message: 'Status updated successfully!' };
+                const returncode = '200';
+                const message = 'Status updated successfully!';
+                var data: any;
+              result = { returncode, message, data };
             } else {
               throw new Error('Error updating the status.');
             }
           });
-        return result;
+          return result;
       } catch (e) {
         throw e;
       }
