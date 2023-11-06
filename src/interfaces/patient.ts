@@ -1,5 +1,3 @@
-import { Interface } from "readline";
-
 export interface Patient {
     patientid: string;
     name: string;
