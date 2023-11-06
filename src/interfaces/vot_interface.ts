@@ -12,4 +12,10 @@ export interface VOTPatient {
     vot: boolean;
     username: string;
     password: number;
+    votstatus: string;
+}
+
+export interface VOTStatus {
+    votpatientid: string;
+    votstatus: string;
 }

@@ -39,6 +39,9 @@ const votpatientModel = (sequelize: any, Sequelize: any) => {
         },
         password: {
             type: Sequelize.INTEGER
+        },
+        votstatus: {
+            type: Sequelize.STRING
         }
     });
 
