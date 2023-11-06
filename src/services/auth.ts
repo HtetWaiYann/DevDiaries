@@ -13,7 +13,7 @@ export default class AuthService {
     @Inject('userCredentialModel') private userCredentialModel: any,
     @Inject('userModel') private userModel: any,
     @Inject('logger') private logger: any,
-  ) {}
+  ) { }
 
   /**
    * Sign Up
@@ -24,7 +24,7 @@ export default class AuthService {
     try {
       var checkUserRecord;
       // check user with same email already exists
-      await this.userCredentialModel.services.findOne({ where: { email: userInputDTO.email } }).then((data: any) => {
+      await this.userCredentialModel.services.findOne({ where: { username: userInputDTO.username } }).then((data: any) => {
         checkUserRecord = data;
       });
 
@@ -39,15 +39,16 @@ export default class AuthService {
       console.log(hashedPassword);
       const userCredentialData: IUserCredentialModel = {
         userid: userid,
+        username: userInputDTO.username,
         email: userInputDTO.email,
         password: hashedPassword,
       };
 
       const userData: IUserModel = {
         userid: userid,
-        firstname: userInputDTO.firstname,
-        lastname: userInputDTO.lastname,
-        username: '',
+        firstname: "",
+        lastname: "",
+        username: userInputDTO.username,
         email: userInputDTO.email,
         profile_image: '',
         bio: '',
@@ -89,13 +90,13 @@ export default class AuthService {
 
   /**
    * Sign In
-   * @param email Email
+   * @param username Username
    * @param password Password
    * @returns
    */
-  public async SignIn(email: string, password: string): Promise<{ response: IResponse }> {
+  public async SignIn(username: string, password: string): Promise<{ response: IResponse }> {
     var userRecord: any;
-    await this.userCredentialModel.services.findAll({ where: { email: email } }).then((data: any) => {
+    await this.userCredentialModel.services.findAll({ where: { username: username } }).then((data: any) => {
       if (data.length > 0) {
         userRecord = data[0];
       }
@@ -150,6 +151,7 @@ export default class AuthService {
       // password will not include if the api comes from social sign in such as google
       const userCredentialData: IUserCredentialModel = {
         userid: userid,
+        username: userInputDTO.username,
         email: userInputDTO.email,
         password: '',
       };

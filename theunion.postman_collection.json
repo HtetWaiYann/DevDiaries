@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "c7c4f4a7-aea1-49f8-accd-0cd37babc7e8",
+		"name": "theunion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18871672",
+		"_collection_link": "https://restless-meteor-606586.postman.co/workspace/nodejsfirstbatch~608a0117-7cb6-49ad-b453-a0d637d9372f/collection/18871672-c7c4f4a7-aea1-49f8-accd-0cd37babc7e8?action=share&source=collection_link&creator=18871672"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    // \"email\" : \"hwy2@gmail.com\",\n    \"username\": \"gg\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"hwy3@gmail.com\",\n    \"username\": \"hwy3\",\n    \"password\": \"2014\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addvotpatients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJkYmI1ZjM5OC05ZWFlLTQ4MTItYjEzMC1lYzI2NmNhY2Y2MTIiLCJleHAiOjE3MDQ0NDExMDMuNTkzLCJpYXQiOjE2OTkyNTcxMDN9.KUoGcoLKGxUh8mwBJspIRjQ9CITyx0VsKknfFZOqIaU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Mikasa\",\n    \"sex\": \"Feale\",\n    \"age\": 20,\n    \"township\": \"AMT\",\n    \"address\": \"Blah Blah\",\n    \"serialNo\": \"string\",\n    \"regdate\": \"string\",\n    \"treatmentStartDate\": \"string\",\n    \"vot\": true,\n    \"username\": \"gg\",\n    \"password\": 1234\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/votpatients/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"votpatients",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getvotpatients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiJkYmI1ZjM5OC05ZWFlLTQ4MTItYjEzMC1lYzI2NmNhY2Y2MTIiLCJleHAiOjE3MDQ0NDE0MDQuNjk4LCJpYXQiOjE2OTkyNTc0MDR9.h1yaZ_Oi8KNw0aDQbx7DLx4Kl3kilRSblMpDRuIxjKk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Mikasa\",\n    \"sex\": \"Feale\",\n    \"age\": 20,\n    \"referDate\": \"2022-12-21\",\n    \"township\": \"AMT\",\n    \"address\": \"Blah Blah\",\n    \"referFrom\": \"Vol1\",\n    \"referTo\": \"Union\",\n    \"signAndSymptom\": \"Fever\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/votpatients/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"votpatients",
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

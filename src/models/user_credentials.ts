@@ -10,6 +10,9 @@ const userCredentialModel = (sequelize: any, Sequelize: any) => {
     email: {
       type: Sequelize.STRING,
     },
+    username: {
+      type: Sequelize.STRING,
+    },
     password: {
       type: Sequelize.STRING,
     },

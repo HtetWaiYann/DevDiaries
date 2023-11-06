@@ -7,10 +7,12 @@ const userModel = (sequelize: any, Sequelize: any) => {
     userid: {
       type: Sequelize.STRING,
     },
-    firstname: {
+    username: {
       type: Sequelize.STRING,
     },
-    lastname: {
+    firstname: { type: Sequelize.STRING, },
+    lastname: { type: Sequelize.STRING, },
+    password: {
       type: Sequelize.STRING,
     },
     email: {

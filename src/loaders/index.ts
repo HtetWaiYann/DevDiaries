@@ -21,6 +21,11 @@ export default async ({ expressApp }: { expressApp: any }) => {
     model: require('../models/patient'),
   };
 
+  const votpatientModel = {
+    name: 'votpatientModel',
+    model: require('../models/vot_patients'),
+  };
+
   const volunteerModel = {
     name: 'volunteerModel',
     model: require('../models/volunteer'),
@@ -34,7 +39,8 @@ export default async ({ expressApp }: { expressApp: any }) => {
       userModel,
       userCredentialModel,
       patientModel,
-      volunteerModel
+      volunteerModel,
+      votpatientModel
     ],
   });
   Logger.info('✌️ Dependency Injector loaded');

@@ -8,6 +8,7 @@ export interface IUser {
 export interface IUserInputDTO {
   firstname: string;
   lastname: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -20,11 +21,12 @@ export interface resetPwdInput {
 
 export interface IUserCredentialModel {
   userid: string,
+  username: string,
   email: string,
   password: string,
 }
 
-export interface IUserModel{
+export interface IUserModel {
   userid: string,
   firstname: string,
   lastname: string,
