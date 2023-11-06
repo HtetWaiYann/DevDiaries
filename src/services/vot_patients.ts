@@ -141,7 +141,7 @@ export default class AuthService {
       }
 
       const filter = { votpatientid: votStatus.votpatientid };
-      const update = { votstatus: votStatus };
+      const update = { votstatus: votStatus.votstatus };
 
       try {
         var result: any;
