@@ -28,6 +28,8 @@ export default class AuthService {
             const votpatientid = uuidv4();
             const userid = uuidv4();
 
+
+
             const patientData: VOTPatient = {
                 "votpatientid": votpatientid,
                 "serialNo": IVOTPatient.serialNo,
@@ -43,6 +45,16 @@ export default class AuthService {
                 "vot": IVOTPatient.vot
             };
 
+            let result: { returncode: string; message: string; data: any; };
+
+            await this.votpatientModel.services.findOne({ where: { serialNo: IVOTPatient.serialNo } }).then((data: any) => {
+                if (data) {
+                    console.log(">>>");
+                    console.log(data);
+                    throw new Error('Serial No Duplicate');
+                }
+
+            });
             // hash password for security
             const hashedPassword = bcrypt.hashSync(`${IVOTPatient.password}`, 10);
             console.log(hashedPassword);
@@ -90,6 +102,8 @@ export default class AuthService {
         try {
             var result: any;
             var response: IResponse;
+
+
 
             // Mysql function to delete dat{a
             await this.votpatientModel.services.findAll({}).then((data: any) => {

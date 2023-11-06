@@ -11,6 +11,7 @@ import responseFunction from '../common/responseFunction';
 export default class AuthService {
   constructor(
     @Inject('userCredentialModel') private userCredentialModel: any,
+    @Inject('votpatientModel') private votpatientModel: any,
     @Inject('userModel') private userModel: any,
     @Inject('logger') private logger: any,
   ) { }
@@ -108,11 +109,17 @@ export default class AuthService {
     const validPassword = bcrypt.compareSync(password, userRecord.password);
     if (validPassword) {
       const token = this.generateToken(userRecord.userid);
-      // const user = userRecord;
-      // Reflect.deleteProperty(user, 'password');
+      let votData;
+      await this.votpatientModel.services.findOne({ where: { username: username } }).then((data: any) => {
+        if (data) {
+          votData = data;
+        }
+      });
+
       const data = {
         token: token,
         userid: userRecord.userid,
+        votData
       };
       const response: IResponse = responseFunction('200', 'Signed in successfully.', data);
       return { response };
